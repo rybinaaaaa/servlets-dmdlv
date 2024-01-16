@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9853bd5-bbc4-4a2f-b479-1f2258141523" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/rybina/DatagramRunner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/rybina/DatagramServerRunner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/rybina/UrlExample.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,11 +51,22 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1705405792418</updated>
-      <workItem from="1705405793631" duration="3652000" />
+      <workItem from="1705405793631" duration="6321000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/rybina/UrlExample.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
