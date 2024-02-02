@@ -1,50 +1,62 @@
 package org.rybina.server;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HttpServer {
 
+    private final ExecutorService pool;
     private final int port;
+    private boolean stopped;
 
-    public HttpServer(int port) {
+    public HttpServer(int port, int poolSize) {
         this.port = port;
+        this.pool = Executors.newFixedThreadPool(poolSize);
     }
 
     public void run() {
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
-//            accept блокирует потокк
-            Socket socket = serverSocket.accept();
-            processSocket(socket);
+            var server = new ServerSocket(port);
+            while (!stopped) {
+                var socket = server.accept();
+                System.out.println("Socket accepted");
+                pool.submit(() -> processSocket(socket));
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void processSocket(Socket socket) {
-//        socket мы передали чтобы в конце его закрыть
         try (socket;
-             DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-             OutputStream outputStream = socket.getOutputStream();) {
-//        1 шаг - обработка запроса
-            System.out.println("Request: " + new String(inputStream.readNBytes(400)));
-//        2 шаг - обработка ответа
+             var inputStream = new DataInputStream(socket.getInputStream());
+             var outputStream = new DataOutputStream(socket.getOutputStream())) {
+//            step 1 handle request
+            System.out.println("Request: " + new String(inputStream.readAllBytes()));
+
+//            Thread.sleep(10000);
+//            step 2 handle response
             byte[] body = "Hi client!".getBytes();
-            byte[] headers = """
+            var headers = """
                     HTTP/1.1 200 OK
-                    Content-Type: text/html
-                    Content-Length: %s
+                    content-type: text/html
+                    content-length: %s
                     """.formatted(body.length).getBytes();
             outputStream.write(headers);
             outputStream.write(System.lineSeparator().getBytes());
             outputStream.write(body);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            // TODO: 2/27/21 log error message
+            e.printStackTrace();
         }
+    }
+
+    public void setStopped(boolean stopped) {
+        this.stopped = stopped;
     }
 }
