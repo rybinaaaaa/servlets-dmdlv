@@ -1,4 +1,4 @@
-package com.rybina.http.servlet;
+package com.rybina.http.servlet.examples;
 
 import com.rybina.http.dto.UserDto;
 import jakarta.servlet.ServletException;
