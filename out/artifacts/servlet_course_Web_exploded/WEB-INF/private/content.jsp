@@ -12,7 +12,16 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-    Content . Проверка кодировки
+    <div>
+        <span>Content</span>
+        <p>Size ${requestScope.flights.size()}</p>
+
+<%--        Так лучше не делать--%>
+<%--        <p>Id ${requestScope.flights.get(0).id}</p>--%>
+        <p>Id ${requestScope.flights[1].id}</p>
+        <p>Map ${sessionScope.flightsMap[1]}</p>
+        <p>JSessionId id: ${cookie["JSESSIONID"]}</p>
+    </div>
 <%@include file="footer.jsp"%>
 </body>
 </html>
