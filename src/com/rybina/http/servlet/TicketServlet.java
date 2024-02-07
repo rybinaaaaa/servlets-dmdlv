@@ -1,6 +1,7 @@
 package com.rybina.http.servlet;
 
 import com.rybina.http.service.TicketService;
+import com.rybina.http.util.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,20 +20,25 @@ public class TicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long flightId = Long.valueOf(req.getParameter("flightId"));
-        resp.setContentType("text/html");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
-        try (PrintWriter writer = resp.getWriter()) {
-            writer.write("<h1>Купленные билеты</h1>");
-            writer.write("<ul>");
-            ticketService.findAllByFlightId(flightId).stream().forEach(ticketDto -> {
-                writer.write("""
-                        <li>
-                        %s
-                        </li>
-                        """.formatted(ticketDto.getSeatNo()));
-            });
-            writer.write("</ul>");
-        }
+        req.setAttribute("tickets", ticketService.findAllByFlightId(flightId));
+
+//        resp.setContentType("text/html");
+//        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+//        try (PrintWriter writer = resp.getWriter()) {
+//            writer.write("<h1>Купленные билеты</h1>");
+//            writer.write("<ul>");
+//            ticketService.findAllByFlightId(flightId).stream().forEach(ticketDto -> {
+//                writer.write("""
+//                        <li>
+//                        %s
+//                        </li>
+//                        """.formatted(ticketDto.getSeatNo()));
+//            });
+//            writer.write("</ul>");
+//        }
+
+        req.getRequestDispatcher(JspHelper.getPath("tickets")).forward(req, resp);
     }
 }

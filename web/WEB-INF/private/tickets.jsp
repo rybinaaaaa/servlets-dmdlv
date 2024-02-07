@@ -10,20 +10,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="my_name" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
 <h1>Купленные билеты</h1>
-<%--Использование скрипеты--%>
 <ul>
-<%
-    List<TicketDto> tickets = TicketService.getInstance().findAllByFlightId(Long.valueOf(request.getParameter("flightId")));
-    for (TicketDto ticket : tickets) {
-        out.write(String.format("<li> %s </li>", ticket.getSeatNo()));
-    }
-%>
+<my_name:forEach var="ticket" items="${requestScope.tickets}">
+    <li>
+        ${ticket.seatNo}
+    </li>
+</my_name:forEach>
 </ul>
 </body>
 </html>
