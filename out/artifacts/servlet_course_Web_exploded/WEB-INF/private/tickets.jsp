@@ -11,6 +11,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="my_name" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <title>Title</title>
@@ -20,7 +21,7 @@
 <ul>
 <my_name:forEach var="ticket" items="${requestScope.tickets}">
     <li>
-        ${ticket.seatNo}
+        ${fn:toLowerCase(ticket.seatNo)}
     </li>
 </my_name:forEach>
 </ul>
