@@ -1,0 +1,39 @@
+package com.rybina.http.service;
+
+import com.rybina.http.dao.UserDao;
+import com.rybina.http.dto.CreateUserDto;
+import com.rybina.http.entity.User;
+import com.rybina.http.exception.ValidationException;
+import com.rybina.http.mapper.CreateUserMapper;
+import com.rybina.http.validator.CreateUserValidator;
+import com.rybina.http.validator.ValidationResult;
+
+public class UserService {
+
+    public static final UserService INSTANCE = new UserService();
+
+    private final UserDao userDao = UserDao.getInstance();
+    private final CreateUserValidator createUserValidator = CreateUserValidator.getInstance();
+    private final CreateUserMapper createUserMapper = CreateUserMapper.getInstance();
+
+    private UserService() {
+    }
+
+    public static UserService getInstance() {
+        return INSTANCE;
+    }
+
+    public Integer create(CreateUserDto userDto) {
+//        validation
+        ValidationResult validationResult = createUserValidator.isValid(userDto);
+        if (!validationResult.isValid()) {
+            throw new ValidationException(validationResult.getErrors());
+        }
+//        map DTO -> entity
+        User user = createUserMapper.mapFrom(userDto);
+//        userDao.save
+        userDao.save(user);
+//        return id
+        return user.getId();
+    }
+}
