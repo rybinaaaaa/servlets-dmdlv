@@ -1,14 +1,15 @@
 package com.rybina.http.mapper;
 
 import com.rybina.http.dto.CreateUserDto;
-import com.rybina.http.dto.UserDto;
 import com.rybina.http.entity.Gender;
 import com.rybina.http.entity.Role;
 import com.rybina.http.entity.User;
 import com.rybina.http.util.LocalDateFormatter;
 
 public class CreateUserMapper implements Mapper<CreateUserDto, User> {
+
     private static final CreateUserMapper INSTANCE = new CreateUserMapper();
+    private final static String IMAGE_FOLDER = "users/";
 
     private CreateUserMapper() {
     }
@@ -26,6 +27,7 @@ public class CreateUserMapper implements Mapper<CreateUserDto, User> {
                 .gender(Gender.valueOf(object.getGender()))
                 .role(Role.valueOf(object.getRole()))
                 .birthday(LocalDateFormatter.format(object.getBirthday()))
+                .image(IMAGE_FOLDER + object.getImage().getSubmittedFileName())
                 .build();
     }
 }

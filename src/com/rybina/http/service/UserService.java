@@ -7,6 +7,7 @@ import com.rybina.http.exception.ValidationException;
 import com.rybina.http.mapper.CreateUserMapper;
 import com.rybina.http.validator.CreateUserValidator;
 import com.rybina.http.validator.ValidationResult;
+import lombok.SneakyThrows;
 
 public class UserService {
 
@@ -15,6 +16,8 @@ public class UserService {
     private final UserDao userDao = UserDao.getInstance();
     private final CreateUserValidator createUserValidator = CreateUserValidator.getInstance();
     private final CreateUserMapper createUserMapper = CreateUserMapper.getInstance();
+    private final ImageService imageService = ImageService.getInstance();
+    private final static String IMAGE_FOLDER = "users/";
 
     private UserService() {
     }
@@ -23,6 +26,7 @@ public class UserService {
         return INSTANCE;
     }
 
+    @SneakyThrows
     public Integer create(CreateUserDto userDto) {
 //        validation
         ValidationResult validationResult = createUserValidator.isValid(userDto);
@@ -31,6 +35,8 @@ public class UserService {
         }
 //        map DTO -> entity
         User user = createUserMapper.mapFrom(userDto);
+//        Сохраняем картинку
+        imageService.upload(IMAGE_FOLDER + userDto.getImage().getSubmittedFileName(), userDto.getImage().getInputStream());
 //        userDao.save
         userDao.save(user);
 //        return id

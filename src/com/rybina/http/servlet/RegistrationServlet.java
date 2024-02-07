@@ -5,14 +5,17 @@ import com.rybina.http.exception.ValidationException;
 import com.rybina.http.service.UserService;
 import com.rybina.http.util.JspHelper;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.util.List;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024) // будет сохранять файлы на жесткий диск только в том случае, если файт весит больше одного гб
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
@@ -36,13 +39,19 @@ public class RegistrationServlet extends HttpServlet {
         String role = req.getParameter("role");
         String gender = req.getParameter("gender");
 
+        Part image = req.getPart("image");
+
+//        По умолячанию сервлеты не умеют работать с Part
+
         CreateUserDto userDto = CreateUserDto.builder()
                 .name(name)
                 .email(email)
                 .birthday(birthday)
                 .password(password)
                 .role(role)
-                .gender(gender).build();
+                .gender(gender)
+                .image(image)
+                .build();
 
         try {
             userService.create(userDto);

@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/registration" method="post">
+<form action="${pageContext.request.contextPath}/registration" method="post" enctype="multipart/form-data">
     <label for="name">
         Name:
         <input type="text" name="name" id="name"/>
@@ -28,9 +28,14 @@
         <input type="email" name="email" id="email"/>
     </label>
     <br>
+    <label for="image">
+        Image:
+        <input type="file" name="image" id="image"/>
+    </label>
+    <br>
     <label for="password">
         Password:
-        <input type="password" name="password" id="password"/>
+        <input type="password" name="password" id="password" required/>
     </label>
     <select name="role" id="role">
         <c:forEach var="role" items="${requestScope.roles}">
