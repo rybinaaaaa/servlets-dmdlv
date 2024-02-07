@@ -20,7 +20,7 @@
 <body>
 <h1>Купленные билеты</h1>
 <ul>
-    <c:if test="${requestScope.tickets}">
+    <c:if test="${not empty requestScope.tickets}">
         <c:forEach var="ticket" items="${requestScope.tickets}">
             <li>
                     ${fn:toLowerCase(ticket.seatNo)}
