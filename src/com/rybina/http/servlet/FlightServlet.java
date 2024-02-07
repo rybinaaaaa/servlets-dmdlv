@@ -1,6 +1,7 @@
 package com.rybina.http.servlet;
 
 import com.rybina.http.service.FlightService;
+import com.rybina.http.util.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,19 +18,11 @@ public class FlightServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+//        resp.setContentType("text/html");
+//        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
-        try (PrintWriter writer = resp.getWriter()) {
-            writer.write("<h1>Список перелетов:</h1>");
-            writer.write("<ul>");
-flightService.findAll().forEach(flightDto -> {
-    writer.write("""
-<li>
-<a href='/tickets?flightId=%d'>%s</a> </li>
-""".formatted(flightDto.getId(), flightDto.getDescription()));
-});
-            writer.write("</ul>");
-        }
+        req.setAttribute("flights", flightService.findAll());
+
+        req.getRequestDispatcher(JspHelper.getPath("flights")).forward(req, resp);
     }
 }
