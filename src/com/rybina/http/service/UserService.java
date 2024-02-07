@@ -17,7 +17,7 @@ public class UserService {
     private final CreateUserValidator createUserValidator = CreateUserValidator.getInstance();
     private final CreateUserMapper createUserMapper = CreateUserMapper.getInstance();
     private final ImageService imageService = ImageService.getInstance();
-    private final static String IMAGE_FOLDER = "users/";
+    private final static String IMAGE_FOLDER = "/users/";
 
     private UserService() {
     }

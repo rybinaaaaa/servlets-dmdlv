@@ -9,7 +9,7 @@ import com.rybina.http.util.LocalDateFormatter;
 public class CreateUserMapper implements Mapper<CreateUserDto, User> {
 
     private static final CreateUserMapper INSTANCE = new CreateUserMapper();
-    private final static String IMAGE_FOLDER = "users/";
+    private final static String IMAGE_FOLDER = "/users/";
 
     private CreateUserMapper() {
     }
