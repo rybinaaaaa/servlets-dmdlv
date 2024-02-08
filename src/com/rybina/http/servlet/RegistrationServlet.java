@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024) // будет сохранять файлы на жесткий диск только в том случае, если файт весит больше одного гб
-@WebServlet("/registration")
+@WebServlet(value = "/registration", name = "registrationServlet")
 public class RegistrationServlet extends HttpServlet {
 
     private final UserService userService = UserService.getInstance();
