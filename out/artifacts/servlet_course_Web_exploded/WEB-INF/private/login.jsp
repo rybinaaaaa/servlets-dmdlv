@@ -7,18 +7,21 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Login</title>
 </head>
 <body>
+<fmt:setLocale value="ua_UK"/>
+<fmt:setBundle basename="translations"/>
 <form action="${pageContext.request.contextPath}/login" method="post">
     <label for="email">
-        Email:
+        <fmt:message key="page.login.email"/>
     </label>
     <input type="text" name="email" id="email" value="${param.email}" required>
     <label for="password">
-        Password:
+        <fmt:message key="page.login.password"/>
     </label>
     <input type="password" name="password" id="password" required>
 

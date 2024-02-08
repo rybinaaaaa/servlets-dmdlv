@@ -10,10 +10,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
+import static com.rybina.http.util.UrlPath.*;
+
 @WebFilter("/*")
 public class AuthorisationFilter implements Filter {
 
-    private static final Set<String> PUBLIC_PATH = Set.of(UrlPath.LOGIN, UrlPath.REGISTRATION, UrlPath.LOGOUT, UrlPath.IMAGES);
+    private static final Set<String> PUBLIC_PATH = Set.of(LOGIN, REGISTRATION, LOGOUT, IMAGES, LOCALE);
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -22,7 +24,7 @@ public class AuthorisationFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             String prevPage = ((HttpServletRequest) servletRequest).getHeader("referer");
-            ((HttpServletResponse) servletResponse).sendRedirect(prevPage != null ? prevPage : UrlPath.LOGIN);
+            ((HttpServletResponse) servletResponse).sendRedirect(prevPage != null ? prevPage : LOGIN);
         }
     }
 
