@@ -4,6 +4,7 @@ import com.rybina.http.dto.CreateUserDto;
 import com.rybina.http.exception.ValidationException;
 import com.rybina.http.service.UserService;
 import com.rybina.http.util.JspHelper;
+import com.rybina.http.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024) // будет сохранять файлы на жесткий диск только в том случае, если файт весит больше одного гб
-@WebServlet(value = "/registration", name = "registrationServlet")
+@WebServlet(value = UrlPath.REGISTRATION, name = "registrationServlet")
 public class RegistrationServlet extends HttpServlet {
 
     private final UserService userService = UserService.getInstance();
