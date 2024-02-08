@@ -33,7 +33,7 @@
 </form>
 <c:if test="${param.error != null}">
     <div style="color: red">
-        <span>Error or password is incorrect</span>
+        <span>Email or password is incorrect</span>
     </div>
 </c:if>
 </body>
