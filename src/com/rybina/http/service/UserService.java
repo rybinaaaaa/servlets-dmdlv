@@ -2,21 +2,26 @@ package com.rybina.http.service;
 
 import com.rybina.http.dao.UserDao;
 import com.rybina.http.dto.CreateUserDto;
+import com.rybina.http.dto.ReadUserDto;
 import com.rybina.http.entity.User;
 import com.rybina.http.exception.ValidationException;
 import com.rybina.http.mapper.CreateUserMapper;
+import com.rybina.http.mapper.ReadUserMapper;
 import com.rybina.http.validator.CreateUserValidator;
 import com.rybina.http.validator.ValidationResult;
 import lombok.SneakyThrows;
 
+import java.util.Optional;
+
 public class UserService {
 
-    public static final UserService INSTANCE = new UserService();
+    private static final UserService INSTANCE = new UserService();
 
     private final UserDao userDao = UserDao.getInstance();
     private final CreateUserValidator createUserValidator = CreateUserValidator.getInstance();
     private final CreateUserMapper createUserMapper = CreateUserMapper.getInstance();
     private final ImageService imageService = ImageService.getInstance();
+    private final ReadUserMapper readUserMapper = ReadUserMapper.getInstance();
     private final static String IMAGE_FOLDER = "/users/";
 
     private UserService() {
@@ -41,5 +46,9 @@ public class UserService {
         userDao.save(user);
 //        return id
         return user.getId();
+    }
+
+    public Optional<ReadUserDto> login(String email, String password) {
+        return userDao.findByEmailAndPassword(email, password).map(readUserMapper::mapFrom);
     }
 }
