@@ -13,6 +13,7 @@
     <title>Login</title>
 </head>
 <body>
+<%@include file="header.jsp"%>
 <fmt:setLocale value="ua_UK"/>
 <fmt:setBundle basename="translations"/>
 <form action="${pageContext.request.contextPath}/login" method="post">
